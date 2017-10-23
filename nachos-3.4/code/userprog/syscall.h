@@ -18,6 +18,11 @@
 /* system call codes -- used by the stubs to tell the kernel which system call
  * is being asked for
  */
+#define MAX_INT_LENGTH 9
+#define MASK_GET_NUM 0xF
+#define LIMIT 255
+
+
 #define SC_Halt		0
 #define SC_Exit		1
 #define SC_Exec		2
@@ -35,7 +40,9 @@
 #define SC_PrintChar    14
 #define SC_ReadString   15
 #define SC_PrintString  16
-
+#define SC_Sort         17
+#define SC_ASCII        18
+#define SC_Help         19
 #ifndef IN_ASM
 
 /* The system call interface.  These are the operations the Nachos
@@ -138,6 +145,9 @@ void PrintChar(char character);
 
 void ReadString(char buffer[], int length);
 void PrintString(char buffer[]);	
+void Sort(int length, int Array[]);
+void Ascii();
+void Help();
 
 #endif /* IN_ASM */
 

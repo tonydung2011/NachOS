@@ -35,7 +35,7 @@ CPP = gcc -E
 INCDIR =-I../userprog -I../threads
 CFLAGS = -G 0 -c $(INCDIR)
 
-all: halt shell matmult sort ReadInt PrintInt ReadChar PrintChar ReadString PrintString
+all: halt shell matmult sort ReadInt PrintInt ReadChar PrintChar ReadString PrintString Sort Help Ascii
 
 start.o: start.s ../userprog/syscall.h
 	$(CPP) $(CPPFLAGS) start.c > strt.s
@@ -66,38 +66,54 @@ matmult: matmult.o start.o
 	$(LD) $(LDFLAGS) start.o matmult.o -o matmult.coff
 	../bin/coff2noff matmult.coff matmult
 
-matmult.o: ReadInt.c
+ReadInt.o: ReadInt.c
 	$(CC) $(CFLAGS) -c ReadInt.c
-matmult: ReadInt.o start.o
+ReadInt: ReadInt.o start.o
 	$(LD) $(LDFLAGS) start.o ReadInt.o -o ReadInt.coff
 	../bin/coff2noff ReadInt.coff ReadInt
-
-matmult.o: PrintInt.c
+PrintInt.o: PrintInt.c
 	$(CC) $(CFLAGS) -c PrintInt.c
-matmult: PrintInt.o start.o
+PrintInt: PrintInt.o start.o
 	$(LD) $(LDFLAGS) start.o PrintInt.o -o PrintInt.coff
 	../bin/coff2noff PrintInt.coff PrintInt
 
-matmult.o: ReadChar.c
+ReadChar.o: ReadChar.c
 	$(CC) $(CFLAGS) -c ReadChar.c
-matmult: ReadChar.o start.o
+ReadChar: ReadChar.o start.o
 	$(LD) $(LDFLAGS) start.o ReadChar.o -o ReadChar.coff
 	../bin/coff2noff ReadChar.coff ReadChar
 
-matmult.o: PrintChar.c
+PrintChar.o: PrintChar.c
 	$(CC) $(CFLAGS) -c PrintChar.c
-matmult: PrintChar.o start.o
+PrintChar: PrintChar.o start.o
 	$(LD) $(LDFLAGS) start.o PrintChar.o -o PrintChar.coff
 	../bin/coff2noff PrintChar.coff PrintChar
 
-matmult.o: ReadString.c
+ReadString.o: ReadString.c
 	$(CC) $(CFLAGS) -c ReadString.c
-matmult: ReadString.o start.o
+ReadString: ReadString.o start.o
 	$(LD) $(LDFLAGS) start.o ReadString.o -o ReadString.coff
 	../bin/coff2noff ReadString.coff ReadString
 
-matmult.o: PrintString.c
+PrintString.o: PrintString.c
 	$(CC) $(CFLAGS) -c PrintString.c
-matmult: PrintString.o start.o
+PrintString: PrintString.o start.o
 	$(LD) $(LDFLAGS) start.o PrintString.o -o PrintString.coff
 	../bin/coff2noff PrintString.coff PrintString
+Sort.o: Sort.c
+	$(CC) $(CFLAGS) -c Sort.c
+Sort: Sort.o start.o
+	$(LD) $(LDFLAGS) start.o Sort.o -o Sort.coff
+	../bin/coff2noff Sort.coff Sort
+
+Ascii.o: Ascii.c
+	$(CC) $(CFLAGS) -c Ascii.c
+Ascii: Ascii.o start.o
+	$(LD) $(LDFLAGS) start.o Ascii.o -o Ascii.coff
+	../bin/coff2noff Ascii.coff Ascii
+
+Help.o: Help.c
+	$(CC) $(CFLAGS) -c Help.c
+Help: Help.o start.o
+	$(LD) $(LDFLAGS) start.o Help.o -o Help.coff
+	../bin/coff2noff Help.coff Help

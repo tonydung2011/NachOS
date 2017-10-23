@@ -130,6 +130,8 @@ Yield:
 	j	$31
 	.end Yield
 
+///////////////////////
+
         .globl ReadInt
 	.ent	ReadInt
 ReadInt:
@@ -137,6 +139,8 @@ ReadInt:
 	syscall
 	j $31
 	.end ReadInt
+
+/////////////////////
 
 	.globl PrintInt
 	.ent PrintInt
@@ -146,6 +150,8 @@ PrintInt:
 	j $31
 	.end PrintInt
 
+////////////////////
+
         .globl ReadChar
 	.ent ReadChar
 ReadChar:
@@ -153,6 +159,8 @@ ReadChar:
 	syscall
 	j $31
 	.end ReadChar
+
+////////////////////////////
 
 	.globl PrintChar
 	.ent PrintChar
@@ -162,6 +170,8 @@ PrintChar:
 	j $31
 	.end PrintChar
 
+////////////////////////////
+
         .globl ReadString
 	.ent ReadString
 ReadString:
@@ -170,6 +180,8 @@ ReadString:
 	j $31
 	.end ReadString
 
+////////////////////////////
+
 	.globl PrintString
 	.ent PrintString
 PrintString:
@@ -177,6 +189,38 @@ PrintString:
 	syscall
 	j $31
 	.end PrintString
+
+/////////////////////////
+
+        .globl Sort
+	.ent Sort
+Sort:
+	addiu $2, $0, SC_Sort
+	syscall
+	j $31
+	.end Sort 
+
+///////////////////////
+	
+	.globl Ascii
+	.ent Ascii
+Ascii:
+	addiu $2, $0, SC_ASCII
+	syscall
+	j $31
+	.end Ascii
+
+//////////////////////
+
+	.globl Help
+	.ent Help
+Help:
+	addiu $2, $0, SC_Help
+	syscall
+	j $31
+	.end Help
+
+
 /* dummy function to keep gcc happy */
         .globl  __main
         .ent    __main

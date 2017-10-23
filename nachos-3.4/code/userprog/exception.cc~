@@ -220,10 +220,6 @@ ExceptionHandler(ExceptionType which)
 		printf("Unimplemented or reserved instr %d %d\n", which, Systype);
 		ASSERT(FALSE);
 		break;
-	case NumExceptionTypes:
-		printf("an handle exception at %d %d\n", which, Systype);
-		ASSERT(FALSE);
-		break;
 	case NoException:
 		break;
    }
