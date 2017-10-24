@@ -3,6 +3,6 @@
 void main()
 {
     int number;
-    number=ReadInt();
+    number = ReadInt();
     Halt();
 }

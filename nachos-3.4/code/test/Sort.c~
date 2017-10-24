@@ -1,0 +1,32 @@
+#include "syscall.h"
+int main(){
+	int length;
+	int array[100];
+        int i, j;
+	PrintString("nhap vao do dai mang:");
+	ReadInt(length);
+
+	if (length>100) Halt();
+
+	for (i=0;i < length; i++){
+		PrintString("nhap vao 1 so");
+		ReadInt(array[i]);
+	};
+	
+	for (i=0; i<length-1; i++){
+		for (j=i+1; j<length; j++){
+			if (array[i] > array[j]){
+				int temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+			}
+		}
+	};
+
+	for (i=0; i<length; i++) {
+		PrintInt(array[i]);
+	}
+
+	Halt();
+	return 0;
+}

@@ -1,6 +1,6 @@
 #include "syscall.h"
-int
-main()
+
+void main()
 {
     int number;
     number=ReadInt();

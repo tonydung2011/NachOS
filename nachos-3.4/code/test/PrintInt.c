@@ -6,6 +6,7 @@ int main()
 	number = ReadInt();
 	PrintString("number:");
 	PrintInt(number);
+	PrintChar("\n");
         Halt();
 	return 0;
 }

@@ -83,9 +83,9 @@ ExceptionHandler(ExceptionType which)
 				break;
 				case SC_PrintInt:
 				{
-					char s[MAX_INT_LENGTH], neg, tmp;
+					char s[MAX_INT_LENGTH], neg;
 					neg = '-';
-					int i, n, mid, sz;
+					int i, n, digitCount = 1, sz;
 					i = n = 0;
 					DEBUG('a', "Read argument value at r4");
 					n = machine->ReadRegister(4);
@@ -94,19 +94,15 @@ ExceptionHandler(ExceptionType which)
 						gSynchConsole->Write(&neg,1);
 						n = -n;
 					}
-					do {
-						s[i++] = n%10 + '0';
-					}	while (( n /= 10) > 0);
-					sz = i;
-					s[sz] = '\n';
-					mid = i / 2;
-					while (i-->mid)
-					{
-						tmp = s[sz-i-1];
-						s[sz-i-1] = s[i];
-						s[i] = tmp;
+					while (digitCount*10 <= n){
+					        digitCount*=10;
+					        i++;
 					}
-					gSynchConsole->Write(s, sz);
+					s[i] = '\0'; sz = i;
+					do {
+						s[i--] = n%10 + '0';
+					}	while (( n /= 10) > 0);
+					gSynchConsole->Write(s, sz+2);
 				}
 				break;
 				case SC_PrintChar:
@@ -181,13 +177,13 @@ ExceptionHandler(ExceptionType which)
 				case SC_Help:
 				{
 					char* helpString = "Nhom 1512081 - 1512113\nTran Ngoc Dung - 1512081\nNguyen Minh Dong - 1512113\nASCII: bang ma asciico ban\nSort: thuat toan bubble sort";
-					PrintString(helpString);
+					gSynchConsole->Write(helpString, 134);
 				};
 				break;
 				case SC_ASCII:
 				{
 					char* asciiString = "32	20	spacebar\n33	21	!\n34	22	''\n35	23	#\n36	24	$\n37	25	%\n38	26	&\n39	27	'\n40	28	(\n41	29	)\n42	2A	*\n43	2B	+\n44	2C	,\n45	2D	-\n46	2E	.\n47	2F	/\n48	30	0\n49	31	1\n50	32	2\n51	33	3\n52	34	4\n53	35	5\n54	36	6\n55	37	7\n56	38	8\n57	39	9\n58	3A	:\n59	3B	;\n60	3C	<\n61	3D	=\n62	3E	>\n63	3F	?\n64	40	@\n65	41	A\n66	42	B\n67	43	C\n68	44	D\n69	45	E\n70	46	F\n71	47	G\n72	48	H\n73	49	I\n74	4A	J\n75	4B	K\n76	4C	L\n	4D	M\n78	4E	N\n79	4F	O\n80	50	P\n81	51	Q\n82	52	R\n83	53	S\n84	54	T\n85	55	U\n86	56	V\n87	57	W\n88	58	X\n89	59	Y\n90	5A	Z91	5B	[\n92	5C	\ \n93	5D	]\n94	5E	^\n95	5F	_\n96	60	`\n97	61	a\n98	62	b\n99	63	c\n100	64	d\n101	65	e\n102	66	f\n103	67	g\n104	68	h\n105	69	i\n106	6A	j\n107	6B	k\n108	6C	l\n109	6D	m\n110	6E	n\n111	6F	o\n112	70	p\n113	71	q\n114	72	r\n115	73	s\n116	74	t\n117	75	u\n118	76	v\n119	77	w\n120	78	x\n121	79	y\n122	7A	z\n123	7B	{\n124	7C	|\n125	7D	}\n126	7E	~";
-					PrintString(asciiString);
+					gSynchConsole->Write(asciiString, 1524);
 				};
 				break;
 			}

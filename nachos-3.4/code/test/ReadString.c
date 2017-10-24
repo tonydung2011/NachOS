@@ -3,6 +3,7 @@
 void main()
 {
     char str[255];
-    str=ReadString();
+    ReadString(str, 255);
     Halt();
+    return; 
 }
