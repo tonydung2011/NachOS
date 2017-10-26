@@ -100,6 +100,7 @@ PrintString.o: PrintString.c
 PrintString: PrintString.o start.o
 	$(LD) $(LDFLAGS) start.o PrintString.o -o PrintString.coff
 	../bin/coff2noff PrintString.coff PrintString
+
 Sort.o: Sort.c
 	$(CC) $(CFLAGS) -c Sort.c
 Sort: Sort.o start.o
@@ -116,4 +117,5 @@ Help.o: Help.c
 	$(CC) $(CFLAGS) -c Help.c
 Help: Help.o start.o
 	$(LD) $(LDFLAGS) start.o Help.o -o Help.coff
-	../bin/coff2noff Help.coff Help
+	../bin/coff2noff Help.coff Help
+

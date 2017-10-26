@@ -100,3 +100,20 @@ PrintString.o: PrintString.c
 PrintString: PrintString.o start.o
 	$(LD) $(LDFLAGS) start.o PrintString.o -o PrintString.coff
 	../bin/coff2noff PrintString.coff PrintString
+Sort.o: Sort.c
+	$(CC) $(CFLAGS) -c Sort.c
+Sort: Sort.o start.o
+	$(LD) $(LDFLAGS) start.o Sort.o -o Sort.coff
+	../bin/coff2noff Sort.coff Sort
+
+Ascii.o: Ascii.c
+	$(CC) $(CFLAGS) -c Ascii.c
+Ascii: Ascii.o start.o
+	$(LD) $(LDFLAGS) start.o Ascii.o -o Ascii.coff
+	../bin/coff2noff Ascii.coff Ascii
+
+Help.o: Help.c
+	$(CC) $(CFLAGS) -c Help.c
+Help: Help.o start.o
+	$(LD) $(LDFLAGS) start.o Help.o -o Help.coff
+	../bin/coff2noff Help.coff Help

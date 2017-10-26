@@ -4,13 +4,13 @@ int main(){
 	int array[100];
         int i, j;
 	PrintString("nhap vao do dai mang:");
-	ReadInt(length);
+	length = ReadInt();
 
-	if (length>100) Halt();
+	if (length > 100) Halt();
 
 	for (i=0;i < length; i++){
-		PrintString("nhap vao 1 so");
-		ReadInt(array[i]);
+		PrintString("nhap vao 1 so ");
+		array[i] = ReadInt();
 	};
 	
 	for (i=0; i<length-1; i++){
@@ -24,9 +24,9 @@ int main(){
 	};
 
 	for (i=0; i<length; i++) {
-		PrintInt(array[i]);
+		PrintInt(array[i]);PrintChar(' ');
 	}
-
+	
 	Halt();
 	return 0;
 }

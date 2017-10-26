@@ -1,10 +1,11 @@
 #include "syscall.h"
+
 int main()
 {
 	int number;
-	PrintString("Nhap number:");
+	PrintString("Nhap number: ");
 	number = ReadInt();
-	PrintString("number:");
+	PrintString("number: ");
 	PrintInt(number);
 	PrintChar("\n");
         Halt();

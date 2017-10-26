@@ -1,8 +1,10 @@
 #include "syscall.h"
+#include "system.h"
+#include "copyright.h"
 
 void main()
 {
     int number;
-    number=ReadInt();
+    number = ReadInt();
     Halt();
 }

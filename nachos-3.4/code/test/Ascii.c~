@@ -1,7 +1,39 @@
 #include "syscall.h"
 
 int main(){
-	
+	PrintString("32	20	spacebar\n");PrintChar('\n');
+	PrintString("33	21	!\n");PrintChar('\n');
+	PrintString("34	22	''\n");PrintChar('\n');
+	PrintString("35	23	#\n");PrintChar('\n');
+	PrintString("36	24	$\n");PrintChar('\n');
+	PrintString("37	25	%\n");PrintChar('\n');
+	PrintString("38	26	&\n");PrintChar('\n');
+	PrintString("39	27	'\n");PrintChar('\n');
+	PrintString("40	28	(\n");PrintChar('\n');
+	PrintString("41	29	)\n");PrintChar('\n');
+	PrintString("42	2A	*\n");PrintChar('\n');
+	PrintString("43	2B	+\n");PrintChar('\n');
+	PrintString("44	2C	,\n");PrintChar('\n');
+	PrintString("45	2D	-\n");PrintChar('\n');
+	PrintString("46	2E	.\n");PrintChar('\n');
+	PrintString("47	2F	/\n");PrintChar('\n');
+	PrintString("48	30	0\n");PrintChar('\n');
+	PrintString("49	31	1\n");PrintChar('\n');
+	PrintString("50	32	2\n");PrintChar('\n');
+	PrintString("51	33	3\n");PrintChar('\n');
+	PrintString("52	34	4\n");PrintChar('\n');
+	PrintString("53	35	5\n");PrintChar('\n');
+	PrintString("54	36	6\n");PrintChar('\n');
+	PrintString("55	37	7\n");PrintChar('\n');
+	PrintString("56	38	8\n");PrintChar('\n');
+	PrintString("57	39	9\n");PrintChar('\n');
+	PrintString("58	3A	:\n");PrintChar('\n');
+	PrintString("59	3B	;\n");PrintChar('\n');
+	PrintString("60	3C	<\n");PrintChar('\n');
+	PrintString("61	3D	=\n");PrintChar('\n');
+	PrintString("62	3E	>\n");PrintChar('\n');
+	PrintString("63	3F	?\n");PrintChar('\n');
+	PrintString("64	40	@\n");PrintChar('\n');
 	PrintString("65	41	A\n");PrintChar('\n');
 	PrintString("66	42	B\n");PrintChar('\n');
 	PrintString("67	43	C\n");PrintChar('\n');
@@ -28,6 +60,12 @@ int main(){
 	PrintString("88	58	X\n");PrintChar('\n');
 	PrintString("89	59	Y\n");PrintChar('\n');
 	PrintString("90	5A	Z\n");PrintChar('\n');
+	PrintString("91	5B	[\n");PrintChar('\n');
+	PrintString("92	5C	\ ");PrintChar('\n');
+	PrintString("93	5D	]\n");PrintChar('\n');
+	PrintString("94	5E	^\n");PrintChar('\n');
+	PrintString("95	5F	_\n");PrintChar('\n');
+	PrintString("96	60	`\n");PrintChar('\n');
 	PrintString("97	61	a\n");PrintChar('\n');
 	PrintString("98	62	b\n");PrintChar('\n');
 	PrintString("99	63	c\n");PrintChar('\n');
@@ -54,6 +92,10 @@ int main(){
 	PrintString("120	78	x\n");PrintChar('\n');
 	PrintString("121	79	y\n");PrintChar('\n');
 	PrintString("122	7A	z\n");PrintChar('\n');
+	PrintString("123	7B	{\n");PrintChar('\n');
+	PrintString("124	7C	|\n");PrintChar('\n');
+	PrintString("125	7D	}\n");PrintChar('\n');
+	PrintString("126	7E	~\n");PrintChar('\n');
 	Halt();
 	return 0;
 }

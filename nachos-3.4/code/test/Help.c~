@@ -1,0 +1,9 @@
+#include "syscall.h"
+
+int main(){
+	PrintString("Nhom 1512081 - 1512113 \n");
+	PrintString("Tran Ngoc Dung - 1512081 \n");
+	PrintString("Nguyen Minh Dong - 1512113 \n");
+	Halt();
+	return 0;
+}
