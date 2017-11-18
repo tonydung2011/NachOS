@@ -220,6 +220,16 @@ Help:
 	j $31
 	.end Help
 
+//////////////////////
+
+	.globl CreateFile
+	.ent CreateFile
+CreateFile:
+	addiu $2, $0, SC_CreateFile
+	syscall
+	j $31
+	.end CreateFile
+
 
 /* dummy function to keep gcc happy */
         .globl  __main

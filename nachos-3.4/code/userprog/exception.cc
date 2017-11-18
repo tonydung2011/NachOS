@@ -193,6 +193,20 @@ ExceptionHandler(ExceptionType which)
 					gSynchConsole->Write(asciiString, 1524);
 				};
 				break;
+                                case SC_CreateFile:
+                                {
+                                        int fileNamePointer = machine->ReadRegister(4);
+                                        char * fileName = new char [LIMIT];
+                                        fileName = machine->User2System(fileNamePointer, LIMIT);
+                                        if (!fileSystem->Create(fileName , 0))
+                                        {
+                                               machine->WriteRegister(2,-1);
+                                               break;
+                                        }
+                                        machine->WriteRegister(2,0);
+                                        delete [] fileName;                      
+                                }
+                                break;
 			}
     // Advance program counters.
     machine->registers[PrevPCReg] = machine->registers[PCReg];	

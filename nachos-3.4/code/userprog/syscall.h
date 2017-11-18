@@ -43,6 +43,7 @@
 #define SC_Sort         17
 #define SC_ASCII        18
 #define SC_Help         19
+#define SC_CreateFile   20
 #ifndef IN_ASM
 
 /* The system call interface.  These are the operations the Nachos
@@ -148,6 +149,7 @@ void PrintString(char buffer[]);
 void Sort(int length, int Array[]);
 void Ascii();
 void Help();
+int CreateFile(char fileName[]);
 
 #endif /* IN_ASM */
 

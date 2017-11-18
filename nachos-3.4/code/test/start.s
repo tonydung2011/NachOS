@@ -212,13 +212,23 @@ Ascii:
 
 /*_____________________________*/
 
-	.globl Ascii
-	.ent Ascii
+	.globl Help
+	.ent Help
 Help:
 	addiu $2, $0, SC_Help
 	syscall
 	j $31
 	.end Help
+
+/*_____________________________*/
+
+	.globl CreateFile
+	.ent CreateFile
+CreateFile:
+	addiu $2, $0, SC_CreateFile
+	syscall
+	j $31
+	.end CreateFile
 
 /* dummy function to keep gcc happy */
         .globl  __main
