@@ -140,6 +140,25 @@ FileSystem::FileSystem(bool format)
         freeMapFile = new OpenFile(FreeMapSector);
         directoryFile = new OpenFile(DirectorySector);
     }
+    // this modification is defining 2 new public properties: fileTable and numFileTable
+    // 
+
+	numFileTable = 0;
+	fileTable = new OpenFile*[10];
+	for (int i = 0;i<10;i++){
+		fileTable[i] = NULL;
+	};
+	this->Create("stdin", 0);
+	this->Create("stdout", 0);
+	fileTable[numFileTable++] = this->Open("stdin", 2);
+	fileTable[numFileTable++] = this->Open("stdout", 3);
+}
+
+FileSystem::~FileSystem(){
+	for (int i=0;i<10;i++){
+		if (fileTable[i]!=NULL) delete fileTable[i];
+	}
+	delete[] fileTable;
 }
 
 //----------------------------------------------------------------------
@@ -228,17 +247,54 @@ OpenFile *
 FileSystem::Open(char *name)
 { 
     Directory *directory = new Directory(NumDirEntries);
-    OpenFile *openFile = NULL;
     int sector;
 
     DEBUG('f', "Opening file %s\n", name);
     directory->FetchFrom(directoryFile);
     sector = directory->Find(name); 
-    if (sector >= 0) 		
-	openFile = new OpenFile(sector);	// name was found in directory 
-    delete directory;
-    return openFile;				// return NULL if not found
+
+    // return the OpenFile address in fileTable
+    // 
+
+    if (sector >= 0){ 		
+	fileTable[numFileTable] = new OpenFile(sector);	// name was found in directory 
+	numFileTable++;
+        delete directory;
+        return fileTable[numFileTable-1];				// return NULL if not found
+    }else{
+        printf("no file found\n");
+        delete directory;
+	return NULL;
+    }
+
 }
+
+OpenFile *
+FileSystem::Open(char *name, int openType)
+{ 
+    Directory *directory = new Directory(NumDirEntries);
+    OpenFile *openFile = NULL;
+    int sector;
+
+    // return the OPenFile address in fileTable
+    // fileTable works like a temporary vector store all opened file run in the program
+    // the maxium file can be open when a program is executed is 8
+
+    DEBUG('f', "Opening file %s\n", name);
+    directory->FetchFrom(directoryFile);
+    sector = directory->Find(name); 
+    if (sector >= 0){ 		
+	fileTable[numFileTable] = new OpenFile(sector, openType);	// name was found in directory 
+	numFileTable++;
+        delete directory;
+        return fileTable[numFileTable-1];				// return NULL if not found
+    }else{
+        printf("no file found\n");
+        delete directory;
+	return NULL;
+    }    
+}
+
 
 //----------------------------------------------------------------------
 // FileSystem::Remove

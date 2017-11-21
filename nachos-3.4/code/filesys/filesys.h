@@ -29,7 +29,7 @@
 //	bootstrap problem when the simulated disk is initialized. 
 //
 // Copyright (c) 1992-1993 The Regents of the University of California.
-// All rights reserved.  See copyright.h for copyright notice and limitation 
+n 
 // of liability and disclaimer of warranty provisions.
 
 #ifndef FS_H
@@ -43,7 +43,24 @@
 				// implementation is available
 class FileSystem {
   public:
-    FileSystem(bool format) {}
+    FileSystem(bool format) {
+	fileTable = new OpenFile*[10];
+	numFileTable = 0;
+	for (int i=0;i<10;i++){
+		fileTable[i] = NULL;
+	}
+	this->Create("stdin", 0);
+	this->Create("stdout", 0);
+	fileTable[numFileTable++] = this->Open("stdin", 2);
+	fileTable[numFileTable++] = this->Open("stdout", 3);
+    }
+
+    ~FileSystem(){
+	for (int i=0;i<10;i++){
+		if (fileTable[i]!=NULL) delete fileTable[i];
+	}
+	delete[] fileTable;
+    }
 
     bool Create(char *name, int initialSize) { 
 	int fileDescriptor = OpenForWrite(name);
@@ -57,10 +74,23 @@ class FileSystem {
 	  int fileDescriptor = OpenForReadWrite(name, FALSE);
 
 	  if (fileDescriptor == -1) return NULL;
-	  return new OpenFile(fileDescriptor);
+	  fileTable[numFileTable] = new OpenFile(fileDescriptor);
+	  numFileTable++;
+	  return fileTable[numFileTable-1];
+      }
+
+    OpenFile* Open(char *name, int openType) {
+	  int fileDescriptor = OpenForReadWrite(name, FALSE);
+
+	  if (fileDescriptor == -1) return NULL;
+	  fileTable[numFileTable] = new OpenFile(fileDescriptor, openType);
+	  numFileTable++;
+	  return fileTable[numFileTable-1];
       }
 
     bool Remove(char *name) { return Unlink(name) == 0; }
+	OpenFile** fileTable;	// bang dat ta file
+	int numFileTable; 	// so luong file trong bang dac ta
 
 };
 
@@ -73,17 +103,21 @@ class FileSystem {
     					// If "format", there is nothing on
 					// the disk, so initialize the directory
     					// and the bitmap of free blocks.
+    ~FileSystem();
 
     bool Create(char *name, int initialSize);  	
 					// Create a file (UNIX creat)
 
     OpenFile* Open(char *name); 	// Open a file (UNIX open)
+    OpenFile* Open(char *name, int openType);
 
     bool Remove(char *name);  		// Delete a file (UNIX unlink)
 
     void List();			// List all the files in the file system
 
     void Print();			// List all the files and their contents
+		OpenFile** fileTable;	// bang dac ta file
+		int numFileTable;	// so luong file trong bang dac ta
 
   private:
    OpenFile* freeMapFile;		// Bit map of free disk blocks,
