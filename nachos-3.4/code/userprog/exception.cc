@@ -199,7 +199,7 @@ ExceptionHandler(ExceptionType which)
 				case SC_OpenFileID:
 				{
 					int fileNamePtr = machine->ReadRegister(4);
-					int typeOpen = machine->ReadRegister(4);
+					int typeOpen = machine->ReadRegister(5);
 					char* fileName = new char[255];
 					if (fileSystem->numFileTable == 10) {
 						
@@ -231,17 +231,108 @@ ExceptionHandler(ExceptionType which)
 				break;
 				case SC_ReadFile:
 				{
-					
+					int buffer=machine->ReadRegister(4);
+					int charCount=machine->ReadRegister(5);
+					int numFile=machine->ReadRegister(6);
+					char *buf= new char[charCount];
+					//Kiem tra file co nam trong 0-9 file hoac chua duoc tao
+					if(numfile<0||numfile>10||fileSystem->fileTable[numfile]==NULL)
+					{
+						machine->WriteRegister(2,-1);
+						delete [] buf;
+						break;
+					}
+					buf=machine->User2System(buffer,charCount);
+					//Doc tu console
+					if(fileSystem->fileTable[numfile]->typeOpen==2)
+					{
+						int sz;//so byte doc duoc
+						sz=gSynchConsole->Read(buf,charCount);
+						machine->System2User(buffer,sz,buf);
+						delete []buf;
+						break;
+					}
+					//Doc tu file
+					int Pos1,Pos2;
+					Pos1=fileSystem->fileTable[numfile]->GetCurrentPos();//vi tri dau file
+					if(fileSystem->fileTable[numfile]->Read(buf,charCount)>0)
+					{
+						Pos2=fileSystem->fileTable[numfile]->GetCurrentPos();//vi tri cuoi file
+						machine->System2User(buffer,Pos2-Pos1+1,buff);
+						machine->WriteRegister(2,Pos2-Pos1+1)
+					}
+					else
+					{
+						machine->WriteRegister(2,-1);
+						delete []buf;
+						break;
+					}
 				}
 				break;
 				case SC_WriteFile:
 				{
-					
+					int buffer=machine->ReadRegister(4);
+					int charCount=machine->ReadRegister(5);
+					int numFile=machine->ReadRegister(6);
+					char *buf= new char[charCount];
+					//Kiem tra file co nam trong 0-9 file hoac chua duoc tao
+					if(numfile<0||numfile>10||fileSystem->fileTable[numfile]==NULL)
+					{
+						machine->WriteRegister(2,-1);
+						delete [] buf;
+						break;
+					}
+					buf=machine->User2System(buffer,charCount);
+					//ghi file ra console
+					if(fileSystem->fileTable[numfile]->typeOpen==3)
+					{
+						int i=0;
+						while(buf[i]!=0)
+						{
+							gSynchConsole->Write(buf+i,1);
+							i++;
+						}
+						machine->WriteRegister(2,i-1);
+						delete []buf;
+						break;
+					}
+					//ghi ra file
+					int Pos1,Pos2;
+					Pos1=fileSystem->fileTable[numfile]->GetCurrentPos();//vi tri dau file
+					if(fileSystem->fileTable[numfile]->Write(buf,charCount)>0)
+					{
+						Pos2=fileSystem->fileTable[numfile]->GetCurrentPos();//vi tri cuoi file
+                        machine->WriteRegister(2,Pos2-Pos1+1);
+                        delete []buf;
+                        break;
+					}
 				}
 				break;
 				case SC_Seek:
 				{
-					
+					int pos=machine->ReadRegister(4);
+					int numfile=machine->ReadRegister(5);
+					//Kiem tra file co nam trong 0-9 file hoac chua duoc tao hoac pos k hop le
+					if(numfile<0||numfile>10||fileSystem->fileTable[numfile]==NULL||pos<-1)
+					{
+						machine->WriteRegister(2,-1);
+						break;
+					}
+					//seek tren console
+					if(fileSystem->fileTable[numfile]->typeOpen==2||fileSystem->fileTable[numfile]->typeOpen==3)
+					{
+						machine->WriteRegister(2,-1);
+						break;
+					}
+					//seek cuoi file
+					if(pos==-1)
+					{
+						fileSystem->fileTable[numfile]->SeekF(fileSystem->fileTable[numfile]->length());
+						machine->WriteRegister(2,fileSystem->fileTable[numfile]->length());
+						break;
+					}
+					fileSystem->fileTable[numfile]->SeekF(pos);
+					machine->WriteRegister(2,pos);
 				}
 				break;
 			}

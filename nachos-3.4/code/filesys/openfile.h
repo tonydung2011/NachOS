@@ -57,6 +57,10 @@ class OpenFile {
     int Length() { Lseek(file, 0, 2); return Tell(file); }
 	int _type;	//thuoc tinh file
 			// 0: read-only, 1: read-write, 2: stdin, 3: stdout
+    int GetCurrentPos() { currentOffset = Tell(file);return currentOffset;}
+    int SeekF(int pos) { Lseek(file, pos, 0); 
+            currentOffset = Tell(file);
+            return currentOffset;}
     
   private:
     int file;
@@ -93,6 +97,10 @@ class OpenFile {
 
 	int _type;	//thuoc tinh file
 			// 0: read-only, 1: read-write, 2: stdin, 3: stdout
+    int GetCurrentPos()
+    {
+        return seekPosition;
+    }
     
   private:
     FileHeader *hdr;			// Header for this file 

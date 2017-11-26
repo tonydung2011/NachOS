@@ -35,7 +35,7 @@ CPP = gcc -E
 INCDIR =-I../userprog -I../threads
 CFLAGS = -G 0 -c $(INCDIR)
 
-all: halt shell matmult sort ReadInt PrintInt ReadChar PrintChar ReadString PrintString Help Ascii CreateFile demo_openfile
+all: halt shell matmult sort ReadInt PrintInt ReadChar PrintChar ReadString PrintString Help Ascii CreateFile demo_openfile demo_read_write_seek
 
 start.o: start.s ../userprog/syscall.h
 	$(CPP) $(CPPFLAGS) start.c > strt.s
@@ -112,14 +112,21 @@ Help.o: Help.c
 Help: Help.o start.o
 	$(LD) $(LDFLAGS) start.o Help.o -o Help.coff
 	../bin/coff2noff Help.coff Help
-demo_openfile.o: demo_openfile.c
+demo_openfile.o: demo_openfile.c
 	$(CC) $(CFLAGS) -c demo_openfile.c
 demo_openfile: demo_openfile.o start.o
 	$(LD) $(LDFLAGS) start.o demo_openfile.o -o demo_openfile.coff
-	../bin/coff2noff demo_openfile.coff demo_openfile
+	../bin/coff2noff demo_openfile.coff demo_openfile
+
 
 CreateFile.o: CreateFile.c
 	$(CC) $(CFLAGS) -c CreateFile.c
 CreateFile: CreateFile.o start.o
 	$(LD) $(LDFLAGS) start.o CreateFile.o -o CreateFile.coff
 	../bin/coff2noff CreateFile.coff CreateFile
+
+demo_read_write_seek.o: demo_read_write_seek.c
+	$(CC) $(CFLAGS) -c demo_read_write_seek.c
+demo_read_write_seek: demo_read_write_seek.o start.o
+	$(LD) $(LDFLAGS) start.o demo_read_write_seek.o -o demo_read_write_seek.coff
+	../bin/coff2noff demo_read_write_seek.coff demo_read_write_seek
