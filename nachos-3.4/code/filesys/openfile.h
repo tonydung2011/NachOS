@@ -29,6 +29,7 @@
 class OpenFile {
   public:
     OpenFile(int f) { file = f; currentOffset = 0; }	// open the file
+    OpenFile(int f, int openType) { file = f; currentOffset = 0; _type = openType; }	// open the file
     ~OpenFile() { Close(file); }			// close the file
 
     int ReadAt(char *into, int numBytes, int position) { 
@@ -52,7 +53,13 @@ class OpenFile {
 		}
 
     int Length() { Lseek(file, 0, 2); return Tell(file); }
-    
+    int _type;	//thuoc tinh file
+			// 0: read-only, 1: read-write, 2: stdin, 3: stdout
+    int GetCurrentPos() { currentOffset = Tell(file);return currentOffset;}
+
+    int Seek(int pos) { Lseek(file, pos, 0); 
+            currentOffset = Tell(file);
+            return currentOffset;}
   private:
     int file;
     int currentOffset;
@@ -66,7 +73,7 @@ class OpenFile {
     OpenFile(int sector);		// Open a file whose header is located
 					// at "sector" on the disk
     ~OpenFile();			// Close the file
-
+    OpenFile(int sector, int openType);	// at "sector" on the disk
     void Seek(int position); 		// Set the position from which to 
 					// start reading/writing -- UNIX lseek
 
@@ -85,7 +92,12 @@ class OpenFile {
 					// file (this interface is simpler 
 					// than the UNIX idiom -- lseek to 
 					// end of file, tell, lseek back 
-    
+    int _type;	//thuoc tinh file
+			// 0: read-only, 1: read-write, 2: stdin, 3: stdout
+    int GetCurrentPos()
+    {
+        return seekPosition;
+    }
   private:
     FileHeader *hdr;			// Header for this file 
     int seekPosition;			// Current position within the file

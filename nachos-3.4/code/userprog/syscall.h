@@ -44,6 +44,11 @@
 #define SC_ASCII        18
 #define SC_Help         19
 #define SC_CreateFile   20
+#define SC_OpenFileID   21
+#define SC_CloseFileID  22
+#define SC_ReadFile     23
+#define SC_WriteFile    24
+#define SC_Seek         25
 #ifndef IN_ASM
 
 /* The system call interface.  These are the operations the Nachos
@@ -149,7 +154,12 @@ void PrintString(char buffer[]);
 void Sort(int length, int Array[]);
 void Ascii();
 void Help();
-int CreateFile(char fileName[]);
+int CreateFile(char* fileName);
+int OpenFileID(char* fileName, int type);
+int CloseFileID(int id);
+int ReadFile(char* buffer, int charCount, int id);
+int WriteFile(char* buffer, int charCount, int id);
+int Seek(int pos, int id);
 
 #endif /* IN_ASM */
 

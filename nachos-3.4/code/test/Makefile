@@ -35,7 +35,7 @@ CPP = gcc -E
 INCDIR =-I../userprog -I../threads
 CFLAGS = -G 0 -c $(INCDIR)
 
-all: halt shell matmult sort ReadInt PrintInt ReadChar PrintChar ReadString PrintString Sort Help Ascii CreateFile
+all: halt shell matmult sort ReadInt PrintInt ReadChar PrintChar ReadString PrintString Help Ascii CreateFile echo cat copy reverse
 
 start.o: start.s ../userprog/syscall.h
 	$(CPP) $(CPPFLAGS) start.c > strt.s
@@ -101,12 +101,6 @@ PrintString: PrintString.o start.o
 	$(LD) $(LDFLAGS) start.o PrintString.o -o PrintString.coff
 	../bin/coff2noff PrintString.coff PrintString
 
-Sort.o: Sort.c
-	$(CC) $(CFLAGS) -c Sort.c
-Sort: Sort.o start.o
-	$(LD) $(LDFLAGS) start.o Sort.o -o Sort.coff
-	../bin/coff2noff Sort.coff Sort
-
 Ascii.o: Ascii.c
 	$(CC) $(CFLAGS) -c Ascii.c
 Ascii: Ascii.o start.o
@@ -118,7 +112,29 @@ Help.o: Help.c
 Help: Help.o start.o
 	$(LD) $(LDFLAGS) start.o Help.o -o Help.coff
 	../bin/coff2noff Help.coff Help
-
+echo.o: echo.c
+	$(CC) $(CFLAGS) -c echo.c
+echo: echo.o start.o
+	$(LD) $(LDFLAGS) start.o echo.o -o echo.coff
+	../bin/coff2noff echo.coff echo
+cat.o: cat.c
+	$(CC) $(CFLAGS) -c cat.c
+cat: cat.o start.o
+	$(LD) $(LDFLAGS) start.o cat.o -o cat.coff
+	../bin/coff2noff cat.coff cat
+
+copy.o: copy.c
+	$(CC) $(CFLAGS) -c copy.c
+copy: copy.o start.o
+	$(LD) $(LDFLAGS) start.o copy.o -o copy.coff
+	../bin/coff2noff copy.coff copy
+
+reverse.o: reverse.c
+	$(CC) $(CFLAGS) -c reverse.c
+reverse: reverse.o start.o
+	$(LD) $(LDFLAGS) start.o reverse.o -o reverse.coff
+	../bin/coff2noff reverse.coff reverse
+
 
 CreateFile.o: CreateFile.c
 	$(CC) $(CFLAGS) -c CreateFile.c
